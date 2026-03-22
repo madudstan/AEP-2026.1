@@ -2,7 +2,6 @@ package com.rotalivre.ui;
 
 import com.rotalivre.model.*;
 import com.rotalivre.repository.MemoriaSolicitacaoRepository;
-import com.rotalivre.service.ServicoSolicitacoes;
 
 import java.util.Scanner;
 import java.util.List;
