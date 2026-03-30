@@ -1,5 +1,6 @@
-package com.rotalivre.model;
+package com.aep.rotalivre.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ public class Solicitacao {
     private final String descricao;
     private final String localizacao;
     private final Usuario solicitante;
-    private final com.rotalivre.model.Prioridade prioridade;
+    private final com.aep.rotalivre.model.Prioridade prioridade;
     private Status statusAtual;
     private final LocalDateTime dataCriacao;
-    private LocalDateTime dataPrevisao;
-    private final List<com.rotalivre.model.HistoricoStatus> historico;
+    private LocalDate dataPrevisao;
+    private final List<com.aep.rotalivre.model.HistoricoStatus> historico;
 
-    public Solicitacao(String categoria, String descricao, String localizacao, Usuario solicitante, com.rotalivre.model.Prioridade prioridade) {
+    public Solicitacao(String categoria, String descricao, String localizacao, Usuario solicitante, com.aep.rotalivre.model.Prioridade prioridade) {
         this.protocolo = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         this.categoria = categoria;
         this.descricao = descricao;
@@ -25,11 +26,10 @@ public class Solicitacao {
         this.solicitante = solicitante;
         this.prioridade = prioridade;
         this.statusAtual = Status.ABERTO;
-        this.dataCriacao = LocalDateTime.now();
-        this.dataPrevisao = dataCriacao.plusDays(prioridade.getDiasSla());
+        this.dataCriacao = LocalDateTime.now(); // Mantém LocalDateTime para data de criação, se necessário
+        this.dataPrevisao = LocalDate.now().plusDays(prioridade.getDiasSla()); // Apenas a data para previsão
         this.historico = new ArrayList<>();
 
-        // Registro inicial
         registrarHistorico(null, Status.ABERTO, "Solicitação criada no sistema", "SISTEMA");
     }
 
@@ -42,7 +42,7 @@ public class Solicitacao {
     }
 
     private void registrarHistorico(Status anterior, Status novo, String comentario, String responsavel) {
-        this.historico.add(new com.rotalivre.model.HistoricoStatus(anterior, novo, comentario, responsavel));
+        this.historico.add(new com.aep.rotalivre.model.HistoricoStatus(anterior, novo, comentario, responsavel));
     }
 
     // Getters
@@ -51,11 +51,11 @@ public class Solicitacao {
     public String getDescricao() { return descricao; }
     public String getLocalizacao() { return localizacao; }
     public Usuario getSolicitante() { return solicitante; }
-    public com.rotalivre.model.Prioridade getPrioridade() { return prioridade; }
+    public com.aep.rotalivre.model.Prioridade getPrioridade() { return prioridade; }
     public Status getStatusAtual() { return statusAtual; }
     public LocalDateTime getDataCriacao() { return dataCriacao; }
-    public LocalDateTime getDataPrevisao() { return dataPrevisao; }
-    public List<com.rotalivre.model.HistoricoStatus> getHistorico() { return new ArrayList<>(historico); }
+    public LocalDate getDataPrevisao() { return dataPrevisao; }
+    public List<com.aep.rotalivre.model.HistoricoStatus> getHistorico() { return new ArrayList<>(historico); }
 
     @Override
     public String toString() {

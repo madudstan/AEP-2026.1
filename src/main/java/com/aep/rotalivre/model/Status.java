@@ -1,11 +1,11 @@
-package com.rotalivre.model;
+package com.aep.rotalivre.model;
 
 public enum Status {
-    ABERTO("Aberto"),
-    TRIAGEM("Em Triagem"),
-    EM_EXECUCAO("Em Execução"),
-    RESOLVIDO("Resolvido"),
-    ENCERRADO("Encerrado");
+    ABERTO("ABERTO."),
+    TRIAGEM("EM TRIAGEM."),
+    EM_EXECUCAO("EM EXECUÇÃO."),
+    RESOLVIDO("RESOLVIDO."),
+    ENCERRADO("ENCERRADO."),;
 
     private final String descricao;
 

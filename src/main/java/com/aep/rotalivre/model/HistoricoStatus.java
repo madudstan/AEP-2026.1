@@ -1,4 +1,4 @@
-package com.rotalivre.model;
+package com.aep.rotalivre.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,8 +40,8 @@ public class HistoricoStatus {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        return String.format("[%s] %s -> %s | Responsável: %s | Comentário: %s",
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return String.format("[%s] %s -> %s \n║ Responsável: %s \n║ Comentário: %s",
                 dataHora.format(formatter),
                 statusAnterior != null ? statusAnterior.getDescricao() : "INÍCIO",
                 statusNovo.getDescricao(),

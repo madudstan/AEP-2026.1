@@ -1,4 +1,4 @@
-package com.rotalivre.model;
+package com.aep.rotalivre.model;
 
 public enum Prioridade {
     BAIXO(10, "Baixo Impacto"),

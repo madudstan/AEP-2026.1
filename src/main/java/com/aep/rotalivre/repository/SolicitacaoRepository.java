@@ -1,6 +1,6 @@
-package com.rotalivre.repository;
+package com.aep.rotalivre.repository;
 
-import com.rotalivre.model.Solicitacao;
+import com.aep.rotalivre.model.Solicitacao;
 import java.util.List;
 import java.util.Optional;
 

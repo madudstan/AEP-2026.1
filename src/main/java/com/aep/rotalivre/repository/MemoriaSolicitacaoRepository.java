@@ -1,12 +1,12 @@
-package com.rotalivre.repository;
+package com.aep.rotalivre.repository;
 
-import com.rotalivre.model.Solicitacao;
+import com.aep.rotalivre.model.Solicitacao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MemoriaSolicitacaoRepository implements com.rotalivre.repository.SolicitacaoRepository {
+public class MemoriaSolicitacaoRepository implements com.aep.rotalivre.repository.SolicitacaoRepository {
     private final List<Solicitacao> solicitacoes = new ArrayList<>();
 
     @Override

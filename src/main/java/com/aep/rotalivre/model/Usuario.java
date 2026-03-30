@@ -1,4 +1,4 @@
-package com.rotalivre.model;
+package com.aep.rotalivre.model;
 
 public class Usuario {
     private String nome;

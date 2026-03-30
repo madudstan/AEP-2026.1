@@ -1,7 +1,7 @@
-package com.rotalivre.service;
+package com.aep.rotalivre.service;
 
-import com.rotalivre.model.*;
-import com.rotalivre.repository.SolicitacaoRepository;
+import com.aep.rotalivre.model.*;
+import com.aep.rotalivre.repository.SolicitacaoRepository;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,33 +12,33 @@ public class ServicoSolicitacoes {
         this.repository = repository;
     }
 
-    public String criarSolicitacao(String categoria, String descricao, String localizacao, com.rotalivre.model.Usuario solicitante, com.rotalivre.model.Prioridade prioridade) {
+    public String criarSolicitacao(String categoria, String descricao, String localizacao, com.aep.rotalivre.model.Usuario solicitante, com.aep.rotalivre.model.Prioridade prioridade) {
         validarCamposObrigatorios(categoria, descricao, localizacao);
-        com.rotalivre.model.Solicitacao nova = new com.rotalivre.model.Solicitacao(categoria, descricao, localizacao, solicitante, prioridade);
+        com.aep.rotalivre.model.Solicitacao nova = new com.aep.rotalivre.model.Solicitacao(categoria, descricao, localizacao, solicitante, prioridade);
         repository.salvar(nova);
         return nova.getProtocolo();
     }
 
-    public Optional<com.rotalivre.model.Solicitacao> consultarProtocolo(String protocolo) {
+    public Optional<com.aep.rotalivre.model.Solicitacao> consultarProtocolo(String protocolo) {
         return repository.buscarPorProtocolo(protocolo);
     }
 
-    public void atualizarStatus(String protocolo, com.rotalivre.model.Status novoStatus, String comentario, String responsavel) {
-        com.rotalivre.model.Solicitacao solicitacao = repository.buscarPorProtocolo(protocolo)
+    public void atualizarStatus(String protocolo, com.aep.rotalivre.model.Status novoStatus, String comentario, String responsavel) {
+        com.aep.rotalivre.model.Solicitacao solicitacao = repository.buscarPorProtocolo(protocolo)
                 .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada: " + protocolo));
 
         solicitacao.atualizarStatus(novoStatus, comentario, responsavel);
     }
 
-    public List<com.rotalivre.model.Solicitacao> listarTodas() {
+    public List<com.aep.rotalivre.model.Solicitacao> listarTodas() {
         return repository.listarTodas();
     }
 
-    public List<com.rotalivre.model.Solicitacao> filtrarPorBairro(String bairro) {
+    public List<com.aep.rotalivre.model.Solicitacao> filtrarPorBairro(String bairro) {
         return repository.buscarPorBairro(bairro);
     }
 
-    public List<com.rotalivre.model.Solicitacao> filtrarPorCategoria(String categoria) {
+    public List<com.aep.rotalivre.model.Solicitacao> filtrarPorCategoria(String categoria) {
         return repository.buscarPorCategoria(categoria);
     }
 

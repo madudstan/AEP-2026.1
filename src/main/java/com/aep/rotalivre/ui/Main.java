@@ -1,54 +1,76 @@
-package com.rotalivre.ui;
+package com.aep.rotalivre.ui;
 
-import com.rotalivre.model.*;
-import com.rotalivre.repository.MemoriaSolicitacaoRepository;
-import com.rotalivre.service.ServicoSolicitacoes;
+import com.aep.rotalivre.model.*;
+import com.aep.rotalivre.repository.MemoriaSolicitacaoRepository;
+import com.aep.rotalivre.service.ServicoSolicitacoes;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.List;
 
-public class 1Main {
+public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final ServicoSolicitacoes servico = new ServicoSolicitacoes(new MemoriaSolicitacaoRepository());
 
     public static void main(String[] args) {
-        System.out.println("========================================");
-        System.out.println("   RotaLivre - Acessibilidade Urbana    ");
-        System.out.println("========================================");
+        exibirCabecalho();
 
         while (true) {
-            System.out.println("\nEscolha seu perfil:");
-            System.out.println("1. Cidadão");
-            System.out.println("2. Gestor Público");
-            System.out.println("0. Sair");
-            System.out.print("Opção: ");
-
+            exibirMenuPrincipal();
             String opcao = scanner.nextLine();
 
             switch (opcao) {
                 case "1": menuCidadao(); break;
                 case "2": menuGestor(); break;
-                case "0": System.exit(0);
-                default: System.out.println("Opção inválida!");
+                case "0": System.out.println("\nSaindo do RotaLivre. Até mais!"); System.exit(0);
+                default: System.out.println("\nOpção inválida. Por favor, escolha uma opção válida.");
             }
         }
     }
 
-    private static void menuCidadao() {
-        System.out.println("\n--- MENU CIDADÃO ---");
-        System.out.println("1. Registrar Solicitação");
-        System.out.println("2. Consultar Protocolo");
-        System.out.println("0. Voltar");
-        System.out.print("Opção: ");
+    private static void exibirCabecalho() {
+        System.out.println("➤ RotaLivre");
+        System.out.println("- Sistema de Acessibilidade Urbana");
+        System.out.println("Este sistema permite registrar e acompanhar demandas de acessibilidade em sua cidade. ");
+    }
 
-        String opcao = scanner.nextLine();
-        if (opcao.equals("1")) registrarSolicitacao();
-        else if (opcao.equals("2")) consultarProtocolo();
+    private static void exibirMenuPrincipal() {
+        System.out.println("\n╔═════════════════════════════════════════════════════╗");
+        System.out.println("║                 ESCOLHA SEU PERFIL                  ║");
+        System.out.println("╠═════════════════════════════════════════════════════╣");
+        System.out.println("║ [1] Cidadão                                         ║");
+        System.out.println("║ [2] Gestor Público                                  ║");
+        System.out.println("║ [0] Sair                                            ║");
+        System.out.println("╚═════════════════════════════════════════════════════╝");
+        System.out.print("Digite sua opção: ");
+    }
+
+    private static void menuCidadao() {
+        while (true) {
+            System.out.println("\n╔═════════════════════════════════════════════════════╗");
+            System.out.println("║                   MENU CIDADÃO                      ║");
+            System.out.println("╠═════════════════════════════════════════════════════╣");
+            System.out.println("║ [1] Registrar Nova Solicitação                      ║");
+            System.out.println("║ [2] Consultar Solicitação por Protocolo             ║");
+            System.out.println("║ [0] Voltar ao Menu Principal                        ║");
+            System.out.println("╚═════════════════════════════════════════════════════╝");
+            System.out.print("Digite sua opção: ");
+
+            String opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1": registrarSolicitacao(); break;
+                case "2": consultarProtocolo(); break;
+                case "0": return;
+                default: System.out.println("\nOpção inválida. Por favor, escolha uma opção válida.");
+            }
+        }
     }
 
     private static void registrarSolicitacao() {
         try {
-            System.out.println("\nNova Solicitação de Acessibilidade");
+            System.out.println("\n╔═════════════════════════════════════════════════════╗");
+            System.out.println("║           NOVA SOLICITAÇÃO DE ACESSIBILIDADE        ║");
+            System.out.println("╚═════════════════════════════════════════════════════╝");
 
             System.out.print("Deseja ser anônimo? (S/N): ");
             boolean anonimo = scanner.nextLine().equalsIgnoreCase("S");
@@ -58,77 +80,140 @@ public class 1Main {
                 System.out.print("Nome: "); nome = scanner.nextLine();
                 System.out.print("Email: "); email = scanner.nextLine();
             }
-            com.rotalivre.model.Usuario usuario = new com.rotalivre.model.Usuario(nome, email, anonimo);
+            Usuario usuario = new Usuario(nome, email, anonimo);
 
-            System.out.println("Categorias: Calçada irregular, Falta de rampa, Semáforo sem sinal sonoro, Ônibus sem elevador, Prédio público inacessível");
-            System.out.print("Categoria: "); String categoria = scanner.nextLine();
+            System.out.println("\n╔═════════════════════════════════════════════════════╗");
+            System.out.println("║                      CATEGORIAS                     ║");
+            System.out.println("╚═════════════════════════════════════════════════════╝");
+            System.out.println();
+            System.out.println(" - Calçada irregular;");
+            System.out.println(" - Falta de rampa;");
+            System.out.println(" - Semáforo sem sinal sonoro;");
+            System.out.println(" - Ônibus sem elevador;");
+            System.out.println(" - Prédio público inacessível;");
+            System.out.println(" - Outros.");
+            System.out.println();
+            System.out.print("Escolha a categoria: "); String categoria = scanner.nextLine();
 
             System.out.print("Descrição (mín. 10 caracteres): "); String descricao = scanner.nextLine();
             System.out.print("Localização (Bairro/Rua): "); String localizacao = scanner.nextLine();
 
-            System.out.println("Impacto na Mobilidade: 1. Baixo | 2. Médio | 3. Alto");
-            System.out.print("Opção: ");
+            System.out.println("\nImpacto na Mobilidade:");
+            System.out.println();
+            System.out.println("  [1] Baixo");
+            System.out.println("  [2] Médio");
+            System.out.println("  [3] Alto");
+            System.out.println();
+            System.out.print("Escolha o nível de Impacto: ");
+            System.out.println();
             int imp = Integer.parseInt(scanner.nextLine());
-            com.rotalivre.model.Prioridade prioridade = (imp == 3) ? com.rotalivre.model.Prioridade.ALTO : (imp == 2) ? com.rotalivre.model.Prioridade.MEDIO : com.rotalivre.model.Prioridade.BAIXO;
+            Prioridade prioridade = (imp == 3) ? Prioridade.ALTO : (imp == 2) ? Prioridade.MEDIO : Prioridade.BAIXO;
 
             String protocolo = servico.criarSolicitacao(categoria, descricao, localizacao, usuario, prioridade);
-            System.out.println("\nSUCESSO! Guarde seu protocolo: " + protocolo);
-            System.out.println("Prazo estimado para resolução: " + prioridade.getDiasSla() + " dias.");
+
+            System.out.println("\n╔═════════════════════════════════════════════════════╗");
+            System.out.println("║                SOLICITAÇÃO REGISTRADA!              ║");
+            System.out.println("╠═════════════════════════════════════════════════════╣");
+            System.out.println(String.format("║ Protocolo: %-40s ║", protocolo));
+            System.out.println(String.format("║ Prazo estimado: %-2s dias                             ║", prioridade.getDiasSla()));
+            System.out.println("╚═════════════════════════════════════════════════════╝");
+
 
         } catch (Exception e) {
-            System.out.println("Erro ao registrar: " + e.getMessage());
+            System.out.println("\nERRO: Não foi possível registrar a solicitação. Detalhes: " + e.getMessage());
         }
     }
 
     private static void consultarProtocolo() {
+        System.out.println("\n╔═════════════════════════════════════════════════════╗");
+        System.out.println("║            CONSULTAR SOLICITAÇÃO POR PROTOCOLO      ║");
+        System.out.println("╚═════════════════════════════════════════════════════╝");
         System.out.print("Informe o protocolo: ");
         String protocolo = scanner.nextLine();
 
         servico.consultarProtocolo(protocolo).ifPresentOrElse(
                 s -> {
-                    System.out.println("\n--- DETALHES DA SOLICITAÇÃO ---");
-                    System.out.println(s);
-                    System.out.println("Local: " + s.getLocalizacao());
-                    System.out.println("Descrição: " + s.getDescricao());
-                    System.out.println("Previsão: " + s.getDataPrevisao());
-                    System.out.println("\nHistórico:");
-                    s.getHistorico().forEach(System.out::println);
+                    System.out.println("\n╔═════════════════════════════════════════════════════╗");
+                    System.out.println("║             DETALHES DA SOLICITAÇÃO                 ║");
+                    System.out.println("╠═════════════════════════════════════════════════════╣");
+                    System.out.println("║ Protocolo: " + s.getProtocolo());
+                    System.out.println("║ Status: " + s.getStatusAtual().getDescricao());
+                    System.out.println("║ Categoria: " + s.getCategoria());
+                    System.out.println("║ Local: " + s.getLocalizacao());
+                    System.out.println("║ Descrição: " + s.getDescricao());
+                    System.out.println(String.format("║ Previsão:  %-40s ║", s.getDataPrevisao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                    System.out.println("╠═════════════════════════════════════════════════════╣");
+                    System.out.println("║                 HISTÓRICO DE ATUALIZAÇÕES           ║");
+                    System.out.println("╠═════════════════════════════════════════════════════╣");
+                    s.getHistorico().forEach(h -> System.out.println("║ " + h));
+                    System.out.println("╚═════════════════════════════════════════════════════╝");
                 },
-                () -> System.out.println("Protocolo não encontrado.")
+                () -> System.out.println("\nProtocolo não encontrado. Verifique e tente novamente.")
         );
     }
 
     private static void menuGestor() {
-        System.out.println("\n--- PAINEL DO GESTOR ---");
-        System.out.println("1. Listar Todas as Demandas");
-        System.out.println("2. Atualizar Status de Demanda");
-        System.out.println("0. Voltar");
-        System.out.print("Opção: ");
+        while (true) {
+            System.out.println("\n╔═════════════════════════════════════════════════════╗");
+            System.out.println("║                  PAINEL DO GESTOR                   ║");
+            System.out.println("╠═════════════════════════════════════════════════════╣");
+            System.out.println("║ [1] Listar Todas as Demandas                        ║");
+            System.out.println("║ [2] Atualizar Status de Demanda                     ║");
+            System.out.println("║ [0] Voltar ao Menu Principal                        ║");
+            System.out.println("╚═════════════════════════════════════════════════════╝");
+            System.out.print("Digite sua opção: ");
 
-        String opcao = scanner.nextLine();
-        if (opcao.equals("1")) listarDemandas();
-        else if (opcao.equals("2")) atualizarStatus();
+            String opcao = scanner.nextLine();
+            switch (opcao) {
+                case "1": listarDemandas(); break;
+                case "2": atualizarStatus(); break;
+                case "0": return;
+                default: System.out.println("\nOpção inválida. Por favor, escolha uma opção válida.");
+            }
+        }
     }
 
     private static void listarDemandas() {
-        List<com.rotalivre.model.Solicitacao> lista = servico.listarTodas();
-        if (lista.isEmpty()) System.out.println("Nenhuma demanda registrada.");
-        else lista.forEach(System.out::println);
+        System.out.println("\n╔═════════════════════════════════════════════════════╗");
+        System.out.println("║                LISTA DE TODAS AS DEMANDAS           ║");
+        System.out.println("╚═════════════════════════════════════════════════════╝");
+        List<Solicitacao> lista = servico.listarTodas();
+        if (lista.isEmpty()) {
+            System.out.println("\nNenhuma demanda registrada no momento.");
+        } else {
+            lista.forEach(s -> {
+                System.out.println("-------------------------------------------------------");
+                System.out.println("Protocolo: " + s.getProtocolo());
+                System.out.println("Status: " + s.getStatusAtual().getDescricao());
+                System.out.println("Categoria: " + s.getCategoria());
+                System.out.println("Local: " + s.getLocalizacao());
+                System.out.println("Descrição: " + s.getDescricao());
+                System.out.println("Previsão: " + s.getDataPrevisao());
+                System.out.println("-------------------------------------------------------");
+            });
+        }
     }
 
     private static void atualizarStatus() {
-        System.out.print("Protocolo da demanda: ");
+        System.out.println("\n╔═════════════════════════════════════════════════════╗");
+        System.out.println("║             ATUALIZAR STATUS DE DEMANDA             ║");
+        System.out.println("╚═════════════════════════════════════════════════════╝");
+        System.out.print("Informe o protocolo da demanda: ");
         String protocolo = scanner.nextLine();
 
-        System.out.println("Novos Status: 1. Triagem | 2. Em Execução | 3. Resolvido | 4. Encerrado");
-        System.out.print("Opção: ");
+        System.out.println("\nNovos Status Disponíveis:");
+        System.out.println("  [1] Triagem");
+        System.out.println("  [2] Em Execução");
+        System.out.println("  [3] Resolvido");
+        System.out.println("  [4] Encerrado");
+        System.out.print("Escolha o novo Status: ");
         int opt = Integer.parseInt(scanner.nextLine());
-        com.rotalivre.model.Status novo = switch(opt) {
-            case 1 -> com.rotalivre.model.Status.TRIAGEM;
-            case 2 -> com.rotalivre.model.Status.EM_EXECUCAO;
-            case 3 -> com.rotalivre.model.Status.RESOLVIDO;
-            case 4 -> com.rotalivre.model.Status.ENCERRADO;
-            default -> com.rotalivre.model.Status.ABERTO;
+        Status novo = switch(opt) {
+            case 1 -> Status.TRIAGEM;
+            case 2 -> Status.EM_EXECUCAO;
+            case 3 -> Status.RESOLVIDO;
+            case 4 -> Status.ENCERRADO;
+            default -> Status.ABERTO;
         };
 
         System.out.print("Comentário (obrigatório para encerrar): ");
@@ -138,9 +223,9 @@ public class 1Main {
 
         try {
             servico.atualizarStatus(protocolo, novo, comentario, responsavel);
-            System.out.println("Status atualizado com sucesso!");
+            System.out.println("\nStatus da demanda atualizado com sucesso!");
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("\nERRO: Não foi possível atualizar o status. Detalhes: " + e.getMessage());
         }
     }
 }
