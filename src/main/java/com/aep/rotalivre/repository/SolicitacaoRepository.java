@@ -4,7 +4,7 @@ import com.aep.rotalivre.model.Solicitacao;
 import java.util.List;
 import java.util.Optional;
 
-public interface .SolicitacaoRepository {
+public interface SolicitacaoRepository {
     void salvar(Solicitacao solicitacao);
     Optional<Solicitacao> buscarPorProtocolo(String protocolo);
     List<Solicitacao> listarTodas();
