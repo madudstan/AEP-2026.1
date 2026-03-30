@@ -45,7 +45,6 @@ public class Solicitacao {
         this.historico.add(new com.aep.rotalivre.model.HistoricoStatus(anterior, novo, comentario, responsavel));
     }
 
-    // Getters
     public String getProtocolo() { return protocolo; }
     public String getCategoria() { return categoria; }
     public String getDescricao() { return descricao; }

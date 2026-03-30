@@ -12,6 +12,9 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final ServicoSolicitacoes servico = new ServicoSolicitacoes(new MemoriaSolicitacaoRepository());
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BOLD = "\u001B[1m";
+
     public static void main(String[] args) {
         exibirCabecalho();
 
@@ -29,9 +32,8 @@ public class Main {
     }
 
     private static void exibirCabecalho() {
-        System.out.println("➤ RotaLivre");
+        System.out.println(" " + negrito("➤ RotaLivre"));
         System.out.println("- Sistema de Acessibilidade Urbana");
-        System.out.println("Este sistema permite registrar e acompanhar demandas de acessibilidade em sua cidade. ");
     }
 
     private static void exibirMenuPrincipal() {
@@ -69,7 +71,7 @@ public class Main {
     private static void registrarSolicitacao() {
         try {
             System.out.println("\n╔═════════════════════════════════════════════════════╗");
-            System.out.println("║           NOVA SOLICITAÇÃO DE ACESSIBILIDADE        ║");
+            System.out.println("║          NOVA SOLICITAÇÃO DE ACESSIBILIDADE         ║");
             System.out.println("╚═════════════════════════════════════════════════════╝");
 
             System.out.print("Deseja ser anônimo? (S/N): ");
@@ -82,18 +84,33 @@ public class Main {
             }
             Usuario usuario = new Usuario(nome, email, anonimo);
 
-            System.out.println("\n╔═════════════════════════════════════════════════════╗");
-            System.out.println("║                      CATEGORIAS                     ║");
-            System.out.println("╚═════════════════════════════════════════════════════╝");
-            System.out.println();
-            System.out.println(" - Calçada irregular;");
-            System.out.println(" - Falta de rampa;");
-            System.out.println(" - Semáforo sem sinal sonoro;");
-            System.out.println(" - Ônibus sem elevador;");
-            System.out.println(" - Prédio público inacessível;");
-            System.out.println(" - Outros.");
-            System.out.println();
-            System.out.print("Escolha a categoria: "); String categoria = scanner.nextLine();
+            System.out.println("\n" + negrito("CATEGORIAS DISPONÍVEIS1:\n"));
+            System.out.println("  [1] Calçada irregular");
+            System.out.println("  [2] Falta de rampa");
+            System.out.println("  [3] Semáforo sem sinal sonoro");
+            System.out.println("  [4] Ônibus sem elevador");
+            System.out.println("  [5] Prédio público inacessível");
+            System.out.println("  [6] Outros (Digitar Categoria)");
+
+            System.out.print("\nEscolha a Categoria (1-6): ");
+            String optCat = scanner.nextLine();
+            String categoria;
+
+            categoria = switch(optCat) {
+                case "1" -> "Calçada irregular";
+                case "2" -> "Falta de rampa";
+                case "3" -> "Semáforo sem sinal sonoro";
+                case "4" -> "Ônibus sem elevador";
+                case "5" -> "Prédio público inacessível";
+                case "6" -> {
+                    System.out.print("Digite a nova categoria: ");
+                    yield scanner.nextLine();
+                }
+                default -> {
+                    System.out.println("Opção inválida, usando \'Geral\'.");
+                    yield "Geral";
+                }
+            };
 
             System.out.print("Descrição (mín. 10 caracteres): "); String descricao = scanner.nextLine();
             System.out.print("Localização (Bairro/Rua): "); String localizacao = scanner.nextLine();
@@ -105,19 +122,16 @@ public class Main {
             System.out.println("  [3] Alto");
             System.out.println();
             System.out.print("Escolha o nível de Impacto: ");
-            System.out.println();
             int imp = Integer.parseInt(scanner.nextLine());
             Prioridade prioridade = (imp == 3) ? Prioridade.ALTO : (imp == 2) ? Prioridade.MEDIO : Prioridade.BAIXO;
 
             String protocolo = servico.criarSolicitacao(categoria, descricao, localizacao, usuario, prioridade);
-
             System.out.println("\n╔═════════════════════════════════════════════════════╗");
-            System.out.println("║                SOLICITAÇÃO REGISTRADA!              ║");
+            System.out.println("║                  SOLICITAÇÃO REGISTRADA!            ║");
             System.out.println("╠═════════════════════════════════════════════════════╣");
             System.out.println(String.format("║ Protocolo: %-40s ║", protocolo));
             System.out.println(String.format("║ Prazo estimado: %-2s dias                             ║", prioridade.getDiasSla()));
             System.out.println("╚═════════════════════════════════════════════════════╝");
-
 
         } catch (Exception e) {
             System.out.println("\nERRO: Não foi possível registrar a solicitação. Detalhes: " + e.getMessage());
@@ -126,7 +140,7 @@ public class Main {
 
     private static void consultarProtocolo() {
         System.out.println("\n╔═════════════════════════════════════════════════════╗");
-        System.out.println("║            CONSULTAR SOLICITAÇÃO POR PROTOCOLO      ║");
+        System.out.println("║          CONSULTAR SOLICITAÇÃO POR PROTOCOLO        ║");
         System.out.println("╚═════════════════════════════════════════════════════╝");
         System.out.print("Informe o protocolo: ");
         String protocolo = scanner.nextLine();
@@ -136,16 +150,16 @@ public class Main {
                     System.out.println("\n╔═════════════════════════════════════════════════════╗");
                     System.out.println("║             DETALHES DA SOLICITAÇÃO                 ║");
                     System.out.println("╠═════════════════════════════════════════════════════╣");
-                    System.out.println("║ Protocolo: " + s.getProtocolo());
-                    System.out.println("║ Status: " + s.getStatusAtual().getDescricao());
-                    System.out.println("║ Categoria: " + s.getCategoria());
-                    System.out.println("║ Local: " + s.getLocalizacao());
-                    System.out.println("║ Descrição: " + s.getDescricao());
+                    System.out.println(String.format("║ Protocolo: %-40s ║", s.getProtocolo()));
+                    System.out.println(String.format("║ Status:    %-40s ║", s.getStatusAtual().getDescricao()));
+                    System.out.println(String.format("║ Categoria: %-40s ║", s.getCategoria()));
+                    System.out.println(String.format("║ Local:     %-40s ║", s.getLocalizacao()));
+                    System.out.println(String.format("║ Descrição: %-40s ║", s.getDescricao()));
                     System.out.println(String.format("║ Previsão:  %-40s ║", s.getDataPrevisao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
                     System.out.println("╠═════════════════════════════════════════════════════╣");
-                    System.out.println("║                 HISTÓRICO DE ATUALIZAÇÕES           ║");
+                    System.out.println("║               HISTÓRICO DE ATUALIZAÇÕES             ║");
                     System.out.println("╠═════════════════════════════════════════════════════╣");
-                    s.getHistorico().forEach(h -> System.out.println("║ " + h));
+                    s.getHistorico().forEach(h -> System.out.println(String.format("║ %-51s", h.toString())));
                     System.out.println("╚═════════════════════════════════════════════════════╝");
                 },
                 () -> System.out.println("\nProtocolo não encontrado. Verifique e tente novamente.")
@@ -175,7 +189,7 @@ public class Main {
 
     private static void listarDemandas() {
         System.out.println("\n╔═════════════════════════════════════════════════════╗");
-        System.out.println("║                LISTA DE TODAS AS DEMANDAS           ║");
+        System.out.println("║                  LISTA DE DEMANDAS                  ║");
         System.out.println("╚═════════════════════════════════════════════════════╝");
         List<Solicitacao> lista = servico.listarTodas();
         if (lista.isEmpty()) {
@@ -183,12 +197,12 @@ public class Main {
         } else {
             lista.forEach(s -> {
                 System.out.println("-------------------------------------------------------");
-                System.out.println("Protocolo: " + s.getProtocolo());
-                System.out.println("Status: " + s.getStatusAtual().getDescricao());
-                System.out.println("Categoria: " + s.getCategoria());
-                System.out.println("Local: " + s.getLocalizacao());
-                System.out.println("Descrição: " + s.getDescricao());
-                System.out.println("Previsão: " + s.getDataPrevisao());
+                System.out.println(String.format("Protocolo: %-38s", s.getProtocolo()));
+                System.out.println(String.format("Status: %-41s", s.getStatusAtual().getDescricao()));
+                System.out.println(String.format("Categoria: %-38s", s.getCategoria()));
+                System.out.println(String.format("Local: %-42s", s.getLocalizacao()));
+                System.out.println(String.format("Descrição: %-38s", s.getDescricao()));
+                System.out.println(String.format("Previsão: %-39s", s.getDataPrevisao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
                 System.out.println("-------------------------------------------------------");
             });
         }
@@ -202,10 +216,12 @@ public class Main {
         String protocolo = scanner.nextLine();
 
         System.out.println("\nNovos Status Disponíveis:");
+        System.out.println();
         System.out.println("  [1] Triagem");
         System.out.println("  [2] Em Execução");
         System.out.println("  [3] Resolvido");
         System.out.println("  [4] Encerrado");
+        System.out.println();
         System.out.print("Escolha o novo Status: ");
         int opt = Integer.parseInt(scanner.nextLine());
         Status novo = switch(opt) {
@@ -227,5 +243,9 @@ public class Main {
         } catch (Exception e) {
             System.out.println("\nERRO: Não foi possível atualizar o status. Detalhes: " + e.getMessage());
         }
+    }
+
+    private static String negrito(String texto) {
+        return ANSI_BOLD + texto + ANSI_RESET;
     }
 }
