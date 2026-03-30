@@ -249,4 +249,5 @@ public class Main {
     private static String negrito(String texto) {
         return ANSI_BOLD + texto + ANSI_RESET;
     }
+
 }
