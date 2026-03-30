@@ -26,8 +26,8 @@ public class Solicitacao {
         this.solicitante = solicitante;
         this.prioridade = prioridade;
         this.statusAtual = Status.ABERTO;
-        this.dataCriacao = LocalDateTime.now(); // Mantém LocalDateTime para data de criação, se necessário
-        this.dataPrevisao = LocalDate.now().plusDays(prioridade.getDiasSla()); // Apenas a data para previsão
+        this.dataCriacao = LocalDateTime.now();
+        this.dataPrevisao = LocalDate.now().plusDays(prioridade.getDiasSla());
         this.historico = new ArrayList<>();
 
         registrarHistorico(null, Status.ABERTO, "Solicitação criada no sistema", "SISTEMA");
