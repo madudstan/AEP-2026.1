@@ -1,89 +1,85 @@
-# **RotaLivre - Acessibilidade Urbana**
+# RotaLivre - Acessibilidade Urbana
 
-### **Descrição do Projeto**
+O **RotaLivre** é um sistema desenvolvido em Java para gerenciar solicitações de acessibilidade urbana. Ele permite que cidadãos registrem problemas de acessibilidade e que gestores públicos acompanhem e atualizem o status dessas demandas. O objetivo é facilitar a comunicação entre a população e os órgãos responsáveis, promovendo cidades mais inclusivas.
 
-O RotaLivre é um sistema desenvolvido em Java para gerenciar solicitações de acessibilidade urbana. Ele permite que cidadãos registrem problemas de acessibilidade e que gestores públicos acompanhem e atualizem o status dessas demandas. O objetivo é facilitar a comunicação entre a população e os órgãos responsáveis, promovendo cidades mais inclusivas.
+Este projeto faz parte da **AEP 2026.1** do curso de Engenharia de Software (ESOFT5NA).
 
-### **Alinhamento com os ODS**
+---
 
-Este projeto está alinhado com os Objetivos de Desenvolvimento Sustentável (ODS) da ONU, com foco especial em:
+## Objetivo e Alinhamento com ODS (ONU)
 
-• **ODS 16** – Paz, Justiça e Instituições Eficazes: O RotaLivre promove a transparência e o acesso a serviços públicos, permitindo que cidadãos registrem demandas e acompanhem seu status, fortalecendo a confiança nas instituições e garantindo respostas mais eficazes.
+Este projeto está alinhado com os Objetivos de Desenvolvimento Sustentável da ONU:
 
-• **ODS 10** – Redução das Desigualdades: Ao facilitar o registro e acompanhamento de solicitações de acessibilidade, o sistema busca reduzir barreiras e garantir acesso igualitário a serviços e informações, especialmente para grupos em situação de vulnerabilidade.
+- **ODS 16 – Paz, Justiça e Instituições Eficazes**: Promove a transparência e o acesso a serviços públicos, fortalecendo a confiança nas instituições.
+- **ODS 10 – Redução das Desigualdades**: Busca reduzir barreiras e garantir acesso igualitário a serviços, especialmente para grupos em situação de vulnerabilidade.
+- **ODS 11 – Cidades e Comunidades Sustentáveis**: Contribui para a criação de cidades mais inclusivas e seguras através da participação ativa da população.
 
-• **ODS 11** – Cidades e Comunidades Sustentáveis: Contribui para a criação de cidades mais inclusivas e seguras, ao permitir que a população participe ativamente da identificação e resolução de problemas de acessibilidade urbana, melhorando a qualidade de vida e a gestão urbana.
+---
 
-### **Funcionalidades do Sistema**
-
-O sistema RotaLivre oferece dois perfis de usuário principais, cada um com um conjunto específico de funcionalidades:
-
-**Perfil Cidadão**
-
-• Registrar Nova Solicitação: Permite que o cidadão registre problemas de acessibilidade, como calçadas irregulares, falta de rampas, semáforos sem sinal sonoro, ônibus sem elevador, prédios públicos inacessíveis e entre outros. É possível registrar a solicitação de forma anônima ou identificada, e também adicionar categorias personalizadas.
-
-• Consultar Solicitação por Protocolo: O cidadão pode acompanhar o status e o histórico de atualizações de uma solicitação específica utilizando o número de protocolo gerado no momento do registro.
-
-**Perfil Gestor Público**
-
-• Listar Todas as Demandas: Visualiza todas as solicitações de acessibilidade registradas no sistema, com detalhes como protocolo, categoria, status, localização, descrição e previsão de conclusão.
-
-• Atualizar Status de Demanda: Permite que o gestor altere o status de uma solicitação (Aberto > Triagem > Em Execução > Resolvido > Encerrado) e adicione comentários e o nome do responsável pela atualização.
-
-### **Arquitetura do Projeto**
+## Estrutura Técnica (Versão Beta)
 
 O projeto segue uma estrutura modular, organizada em pacotes para melhor separação de responsabilidades:
 
-• **com.aep.rotalivre.model:** Contém as classes de modelo de dados, como Solicitacao, Usuario, Prioridade, Status e HistoricoStatus. Estas classes representam as entidades do domínio da aplicação.
+- **com.aep.rotalivre.model**: Entidades de domínio (`Solicitacao`, `Usuario`, `Prioridade`, `Status`).
+- **com.aep.rotalivre.repository**: Interface e implementação para persistência em memória.
+- **com.aep.rotalivre.service**: Lógica de negócio e regras de validação.
+- **com.aep.rotalivre.ui**: Interface de usuário baseada em console (CLI).
 
-• **com.aep.rotalivre.repository:** Define a interface SolicitacaoRepository e sua implementação MemoriaSolicitacaoRepository, responsável pelo armazenamento e recuperação das solicitações.
+### Clean Code Aplicado:
+1. **Nomes Significativos**: Métodos como `validarCamposObrigatorios()` e `gerarProtocoloUnico()`.
+2. **Responsabilidade Única (SRP)**: Classes com funções bem definidas, evitando "Classes Deusas".
+3. **Extração de Métodos**: Lógicas complexas divididas em métodos menores e legíveis (ex: validações no serviço).
 
-• **com.aep.rotalivre.service:** Contém a lógica de negócio principal na classe ServicoSolicitacoes, que orquestra as operações de criação, consulta e atualização de solicitações, aplicando as regras de validação.
+---
 
-• **com.aep.rotalivre.ui:** Inclui a classe Main, que é a interface de usuário baseada em console, responsável pela interação com o usuário através de menus e entrada de dados.
-
-### **Como Compilar e Executar**
-
-Este projeto utiliza Apache Maven para gerenciamento de dependências e construção. Siga os passos abaixo para compilar e executar o RotaLivre:
+## Como Compilar e Executar
 
 **Pré-requisitos:**
+- Java Development Kit (JDK) 17 ou superior.
+- Apache Maven instalado.
+- IDEE (Sugestão: Intellij Idea 2026)
 
-• Java Development Kit (JDK) 17 ou superior instalado.
+**Passos:**
+1. Clone ou baixe o projeto.
+2. Navegue até o diretório raiz.
+3. Execute a aplicação através da classe `Main` em `src/main/java/com/aep/rotalivre/ui/Main.java`.
 
-• Apache Maven instalado.
+---
 
-• Alguma IDEE para executar o projeto (sugestão: **Intellij Idea**)
+## Perfis e Personas (IHC)
 
-**> Passos para Execução**
+Abaixo estão detalhados os perfis de usuários que guiaram o desenvolvimento da interface e das funcionalidades do sistema.
 
-1. *Baixe o projeto*: Faça o download do arquivo ZIP/RAR do projeto e descompacte-o em um diretório de sua preferência.
+### 1️. Perfil: Cidadão com Baixa Familiaridade Digital
+*Usuários com dificuldades tecnológicas ou limitações físicas.*
 
+| Persona | Contexto / Condição | Dores | Necessidades | "Medo"                            |
+| :--- | :--- | :--- | :--- |:----------------------------------|
+| **José Roque (76)** | Aposentado, mobilidade reduzida. | Calçadas quebradas. | Letras grandes, poucos passos. | Não conseguir usar sozinho.       |
+| **Maria Helena (58)** | Auxiliar de cozinha, baixa visão. | Semáforos sem som. | Alto contraste, textos claros. | Não conseguir ler as informações. |
+| **Francisco (45)** | Motorista, pai de criança PCD. | Falta de rampas em escolas. | Cadastro rápido, anexo de fotos. | Denúncia não ser levada a sério.  |
 
-2. *Abra sua IDEE* de preferência e navegue até a pasta src/main/java/ui dentro do diretório do projeto.
+### 2️. Perfil: Cidadão em Situação de Vulnerabilidade
+*Foco em acessibilidade e proteção contra retaliação.*
 
+| Persona | Contexto / Condição | Dores | Necessidades | "Medo"                         |
+| :--- | :--- | :--- | :--- |:-------------------------------|
+| **Ana Paula (29)** | Estudante, cadeirante. | Transporte sem acessibilidade. | Registro rápido via celular. | Sofrer represálias de locais.  |
+| **Roberto (41)** | Vendedor, deficiência auditiva. | Falta de sinalização visual. | Comunicação 100% textual. | Ter a solicitação ignorada.    |
+| **Juliana Ferreira (34)** | Cuidadora, mãe de autista. | Falta de espaços adaptados. | Acompanhamento fácil (protocolo). | Dificuldades afetarem o filho. |
 
-3. *Execute a aplicação* na classe Main diretamente no projeto.
+### 3️. Perfil: Servidor Público / Gestor
+*Foco em organização e eficiência operacional.*
 
-### Exemplo de Uso
+| Persona | Contexto / Cargo | Dores | Necessidades | "Medo"                         |
+| :--- | :--- | :--- | :--- |:-------------------------------|
+| **Marcos Pereira (39)** | Atendente da Prefeitura. | Volume alto de demandas. | Painel simples para triagem. | Perder pedidos importantes.    |
+| **Fernanda Souza (42)** | Gestora de Mobilidade. | Dificuldade em priorizar. | Filtros por bairro e impacto. | Decidir sem dados suficientes. |
+| **Ricardo Almeida (36)** | Analista de Planejamento. | Falta de histórico organizado. | Dados estruturados e históricos. | Problemas recorrentes ficarem. |
 
-Ao iniciar o sistema, você será apresentado ao menu principal:
+---
 
-**ESCOLHA SEU PERFIL**
-
-- [1] Cidadão                                           
-- [2] Gestor Público                                    
-- [0] Sair
-
-*Digite sua opção:*
-
-- Selecione 1 para o perfil Cidadão e siga as instruções para registrar ou consultar uma solicitação.
-
-- Selecione 2 para o perfil Gestor Público para listar ou atualizar demandas.
-
-### Equipe
-
-Este projeto foi desenvolvido para a AEP ESOFT5NA 2026.1 pelos alunos:
-
-*   Heloísa Sayuri Silva Saito - RA: 24062631-2
-*   Maria Eduarda de Castro Lachimia - RA: 24055202-2
-*   Matheus Costa E Silva - RA: 24000729-2
+## Equipe (ESOFT5NA 2026.1)
+- **Heloísa Sayuri Silva Saito** - RA: 24062631-2
+- **Maria Eduarda de Castro Lachimia** - RA: 24055202-2
+- **Matheus Costa E Silva** - RA: 24000729-2
