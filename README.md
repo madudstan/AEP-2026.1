@@ -37,7 +37,7 @@ O projeto segue uma estrutura modular, organizada em pacotes para melhor separa�
 **Pré-requisitos:**
 - Java Development Kit (JDK) 17 ou superior.
 - Apache Maven instalado.
-- IDEE (Sugestão: Intellij Idea 2026)
+- Alguma IDEE para executar o projeto (Sugestão: Intellij Idea 2026)
 
 **Passos:**
 1. Clone ou baixe o projeto.
