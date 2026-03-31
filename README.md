@@ -27,7 +27,7 @@ O projeto segue uma estrutura modular, organizada em pacotes para melhor separa�
 
 ### Clean Code Aplicado:
 1. **Nomes Significativos**: Métodos como `validarCamposObrigatorios()` e `gerarProtocoloUnico()`.
-2. **Responsabilidade Única (SRP)**: Classes com funções bem definidas, evitando "Classes Deusas".
+2. **Responsabilidade Única (SRP)**: Classes com funções bem definidas, trazendo organização e evitando misturar as responsabilidades do sistema em um só lugar. 
 3. **Extração de Métodos**: Lógicas complexas divididas em métodos menores e legíveis (ex: validações no serviço).
 
 ---
