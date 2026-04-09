@@ -1,9 +1,11 @@
 # RotaLivre – Plataforma Digital para Acessibilidade Urbana e Inclusão Social
 
 
-O **RotaLivre** é um sistema desenvolvido em Java para gerenciar solicitações de acessibilidade urbana. Ele permite que cidadãos registrem problemas de acessibilidade e que gestores públicos acompanhem e atualizem o status dessas demandas. O objetivo é facilitar a comunicação entre a população e os órgãos responsáveis, promovendo cidades mais inclusivas.
+O **RotaLivre** é um sistema desenvolvido em Java para gerenciamento de solicitações relacionadas à acessibilidade urbana. A plataforma permite que cidadãos registrem problemas e acompanhem suas demandas, enquanto gestores públicos podem analisar, priorizar e atualizar o status dessas solicitações.
 
-Este projeto faz parte da **AEP 2026.1** do curso de Engenharia de Software (ESOFT5NA).
+O sistema tem como objetivo facilitar a comunicação entre a população e os órgãos responsáveis, promovendo maior inclusão, transparência e eficiência na resolução de problemas urbanos.
+
+Este projeto foi desenvolvido como parte da AEP 2026.1 do curso de Engenharia de Software (ESOFT5NA).
 
 ---
 
